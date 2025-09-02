@@ -1,12 +1,32 @@
 // crush_from_pipe.c
-// 1. Build (MSYS2 MinGW64):  gcc -O3 -march=native -pipe -s crush_from_pipe.c -o crush_from_pipe -ltestu01 -lprobdist -lm
-// 2. Run: ./crush_from_pipe | tee results.txt  
-// 3. Then start the VBA sender in file ShuffleSim_v2.xlsm
+//
+// FUNCTION: 
+// - For continuous piped input from any Excel VBA random number generator to TestU01 (SmallCrush, Crush or BigCrush), avoiding the need to save intermediate file on disk.
+// - Wiki into on TestU01: https://en.wikipedia.org/wiki/TestU01
+// - TestU01 webside: https://simul.iro.umontreal.ca/testu01/tu01.html
+//
+// INSTRUCTIONS FOR USE:
+// 1. Install MSYS from https://www.msys2.org/
+// 2. Start MSYS2 MINGW64 terminal window
+// 3. In the MINGW64 terminal window, install TestU01 package, with bash command-line "pacman -S mingw-w64-x86_64-testu01"
+//    More info: https://packages.msys2.org/packages/mingw-w64-x86_64-testu01
+// 4. Put this c-code file in folder C:\msys64\home\<username>
+// 5. Choose between SmallCrush, Crush or BugCrush test batteries by uncommenting the relevant line in the c-code below. Save this file.
+// 6. In the MINGW64 terminal window, build crush_from_pipe.exe with the bash command-line:
+//    "gcc -O3 -march=native -pipe -s crush_from_pipe.c -o crush_from_pipe -ltestu01 -lprobdist -lm"
+// 7. Open the pipe by bash command-line "./crush_from_pipe | tee results.txt"
+//    Note: It then prints “Waiting for VBA writer...”. The tee saves all TestU01 output to file results.txt
+// 8. In Excel VBA IDE, run subroutine "StreamToCrushViaPipe". VBA then generates a stream of PRNG 4-byte numbers to data via the pipe.
+//    Note: The data stream is not written to disk but is stream in memory (with small OS buffers) flowing from the VBA process to this C harness.
+//    Note: The pipe \\.\pipe\RNGStream lies in the kernel’s Named Pipe File System (NPFS), not on physical NTFS disk.
+// 9. When Crush finishes, it closes the pipe; VBA subroutine "StreamToCrushViaPipe" then terminates when it detects that the pipe is closed.
+// 10. The test battery results are in file results.txt
+// AUTHOR: Peter.Schild@OsloMet.no
 
 #include <stdio.h>
 #include <stdint.h>
 #include <windows.h>
-#include <testu01/unif01.h>
+#include <testu01/unif01.h> // make sure TestU01 
 #include <testu01/bbattery.h>
 
 #ifndef ERROR_BROKEN_PIPE
@@ -14,7 +34,7 @@
 #endif
 
 #define PIPE_NAME "\\\\.\\pipe\\RNGStream"
-#define BUF_WORDS (1u<<20)  // buffer: 1,048,576 32-bit words
+#define BUF_WORDS (1u<<20)  // buffer: 1048576 4-byte words
 
 static HANDLE hPipe = INVALID_HANDLE_VALUE;
 static uint32_t buf[BUF_WORDS];
@@ -74,7 +94,7 @@ static void reconnect_client(void) {
     fprintf(stderr, "reconnected; continuing stream...\n");
 }
 
-// TestU01 callback: return 32 random bits from the pipe
+// TestU01 callback: return a 4-byte number from the pipe
 static unsigned int next_bits(void) {
     if (pos == endw) fill_buffer_blocking();
     return buf[pos++];
@@ -98,8 +118,13 @@ int main(void) {
 
     // Wrap the pipe as a generator and run Crush
     unif01_Gen *gen = unif01_CreateExternGenBits("VBA_pipe32", next_bits);
-	//bbattery_SmallCrush(gen);
-    bbattery_Crush(gen);
+
+	// <=========================== Uncomment only one of the following tests:
+	bbattery_SmallCrush(gen);
+    // bbattery_Crush(gen);
+    // bbattery_BigCrush(gen);
+	// ============================>
+
     unif01_DeleteExternGenBits(gen);
 
     CloseHandle(hPipe);
