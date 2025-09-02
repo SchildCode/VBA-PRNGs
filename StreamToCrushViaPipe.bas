@@ -10,7 +10,7 @@ Sub StreamToCrushViaPipe()
 ' 2. Start MSYS2 MINGW64 terminal window
 ' 3. In the MINGW64 terminal window, install TestU01 package, with bash command-line "pacman -S mingw-w64-x86_64-testu01"
 '    More info: https://packages.msys2.org/packages/mingw-w64-x86_64-testu01
-' 4. Put this c-code file in folder C:\msys64\home\<username>
+' 4. Save c-code file "crush_from_pipe.c" in folder C:\msys64\home\<username>
 ' 5. Choose between SmallCrush, Crush or BugCrush test batteries by uncommenting the relevant line in the c-code below. Save this file.
 ' 6. In the MINGW64 terminal window, build crush_from_pipe.exe with the bash command-line:
 '    "gcc -O3 -march=native -pipe -s crush_from_pipe.c -o crush_from_pipe -ltestu01 -lprobdist -lm"
@@ -123,4 +123,5 @@ done:
     Debug.Print "Generated " & xNum & " random numbers, approx 2^" & Round(Log(xNum) / Log(2#), 1) & " (" & Round(xNum * 4# / oneGb, 3) & " Gb)"
     Debug.Print "Basic statistics for random signed 4-byte Long: min=" & xMin & ", mean=" & xMean & ", max=" & xMax
     Beep
+
 End Sub
