@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <windows.h>
-#include <testu01/unif01.h> // make sure TestU01 
+#include <testu01/unif01.h> // make sure TestU01 package installed first
 #include <testu01/bbattery.h>
 
 #ifndef ERROR_BROKEN_PIPE
@@ -131,3 +131,4 @@ int main(void) {
     puts("Done. Pipe closed.");
     return 0;
 }
+
