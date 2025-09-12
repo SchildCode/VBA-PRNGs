@@ -1,7 +1,7 @@
 # VBA-PRNGs
 Pseudoranom number generators ported to VBA, and code for validating with TestU01 test battery
 I have used pseudorandom and quasirandom number generators for over 30 years, for Monte Carlo simulations, optimization, and numerical quadrature.
-Recently I re-evaluated which PRNGs I should use in VBA, and the results are summarized in the table below in order of speed:
+I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs I should use in VBA, and the results are summarized in the table below in order of speed:
 
 | PRNG name | Time to generate 1 million | SmallCrush test |
 | --------- | -------------------------- | --------------- |
