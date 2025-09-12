@@ -21,7 +21,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 * Use **SFC32** for most PRNG tasks (all except studies to be published with peer-review), in partocular those requiring speed. The source code is in file [SFC32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/SFC32_module.bas).
 * Use **PCG32** for those PRNG tasks requiring maximum statistical quality, those to be published scientifically. The source code is in file [PCG32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/PCG32_module.bas).
 
-Code of the remaining PRNGs is in file otherPRNGs_module.bas.<br>
+Code of the remaining PRNGs is in file [otherPRNGs_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/otherPRNGs_module.bas).<br>
 My code for testing all the PRNGs on both ENT and the TestU01 test batteries (SmallCrush, Crush & BigCrush) are included in file tests_module.bas.
 
 
