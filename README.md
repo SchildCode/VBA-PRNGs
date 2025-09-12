@@ -3,7 +3,7 @@ Pseudoranom number generators ported to VBA, and code for validating with TestU0
 I have used pseudorandom and quasirandom number generators for over 30 years, for Monte Carlo simulations, optimization, and numerical quadrature.
 I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs I should use in VBA, and the results are summarized in the table below in order of speed:
 
-| PRNG name | Time to generate 1 million | SmallCrush test | Source |
+| PRNG name | Time to generate 1&nbsp;million numbers | SmallCrush test | Source |
 | --------- | -------------------------- | --------------- | ------ |
 | rnd()     | 0.07 s                     | fail             | native Excel VBA function |
 | Bryc32    | 0.08 s                     | pass             | "Bryc" variant of SFC32 |
