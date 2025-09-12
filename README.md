@@ -7,14 +7,14 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 | --------- | -------------------------- | --------------- | ------ |
 | rnd()     | 0.07 s                     | ![Failed](https://img.shields.io/badge/Fail-red) | native Excel VBA function |
 | Bryc32    | 0.08 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | "Bryc" variant of SFC32 |
-| fminx32   | 0.09 s                     | pass             | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
-| mix32     | 0.09 s                     | pass             | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
-| SFC32     | 0.09 s                     | pass             | Small Fast Counting (SFC) by Chris Doty-Humphrey |
-| LFIB4     | 0.22 s                     | pass             | 4-lagged Fibonacci generator (Marsaglia) |
-| RANDBETWEEN() | 0.23 s                 | pass             | Array versjon of Excel worksheet function RAND | 
-| PCG32     | 0.51 s                     | pass             | PCG32 (XSH-RR),  Permuted Congruential Generator | 
-| MTran     | 0.81 s                     | pass             | Mersenne Twister |
-| RAND()    | 41.40 s                    | pass             | =Evaluate("=RAND()") in VBA |
+| fminx32   | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
+| mix32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
+| SFC32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | Small Fast Counting (SFC) by Chris Doty-Humphrey |
+| LFIB4     | 0.22 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | 4-lagged Fibonacci generator (Marsaglia) |
+| RANDBETWEEN() | 0.23 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | Array versjon of Excel worksheet function RAND | 
+| PCG32     | 0.51 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | PCG32 (XSH-RR),  Permuted Congruential Generator | 
+| MTran     | 0.81 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | Mersenne Twister |
+| RAND()    | 41.40 s                    | ![Passed](https://img.shields.io/badge/Pass-green) | =Evaluate("=RAND()") in VBA |
 
 ## Conclusion
 
