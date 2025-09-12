@@ -5,7 +5,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 
 | PRNG name | Time to generate 1&nbsp;million&nbsp;numbers | SmallCrush test | Source |
 | --------- | -------------------------- | --------------- | ------ |
-| rnd()     | 0.07 s                     | fail             | native Excel VBA function |
+| rnd()     | 0.07 s                     | <span style="color: red;">fail</span> | native Excel VBA function |
 | Bryc32    | 0.08 s                     | pass             | "Bryc" variant of SFC32 |
 | fminx32   | 0.09 s                     | pass             | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
 | mix32     | 0.09 s                     | pass             | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
