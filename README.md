@@ -11,7 +11,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 | mix32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
 | SFC32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | Small Fast Counting (SFC) by Chris Doty-Humphrey |
 | LFIB4     | 0.22 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | 4-lagged Fibonacci generator (Marsaglia) |
-| RANDBETWEEN() | 0.23 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | Array versjon of Excel worksheet function RAND | 
+| RANDBETWEEN() | 0.23 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | Faster array-version of Excel worksheet function RAND() | 
 | PCG32     | 0.51 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | PCG32 (XSH-RR),  Permuted Congruential Generator | 
 | MTran     | 0.81 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | Mersenne Twister |
 | RAND()    | 41.40 s                    | ![Passed](https://img.shields.io/badge/Pass-green) | =Evaluate("=RAND()") in VBA |
