@@ -18,7 +18,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 
 ## Conclusion
 
-* Use **SFC32** for most PRNG tasks (all except studies to be published with peer-review). The source code is in file SFC32_moduke.bas.
+* Use **SFC32** for most PRNG tasks (all except studies to be published with peer-review). The source code is in file [SFC32_moduke.bas][https://github.com/SchildCode/VBA-PRNGs/blob/main/PCG32_module.bas].
 * Use **PCG32** for the remaining 5% of PRNG tasks, those to be published scientifically. The source code is in file PCG32_moduke.bas.
 
 Code of the remaining PRNGs is in file otherPRNGs_module.bas.
