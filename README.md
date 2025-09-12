@@ -22,7 +22,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 * Use **PCG32** for those PRNG tasks requiring maximum statistical quality, those to be published scientifically. The source code is in file [PCG32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/PCG32_module.bas).
 
 Code of the remaining PRNGs is in file [otherPRNGs_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/otherPRNGs_module.bas).<br>
-My code for testing all the PRNGs on both ENT and the TestU01 test batteries (SmallCrush, Crush & BigCrush) are included in file tests_module.bas.
+The above [TestU01](https://en.wikipedia.org/wiki/TestU01) test results are from the specific VBA code in this GitHub repositry.  My code for testing all the PRNGs on both ENT and the TestU01 test batteries (SmallCrush, Crush & BigCrush) are included in file tests_module.bas.
 
 
   
