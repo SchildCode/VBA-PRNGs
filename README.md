@@ -4,7 +4,7 @@ I have used pseudorandom and quasirandom number generators for over 30 years, fo
 I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs I should use in VBA, and the results are summarized in the table below in order of speed:
 
 | PRNG name | Time to generate 1&nbsp;million&nbsp;numbers | SmallCrush | Crush | Period | Source |
-| --------- | -------------------------------------------- | --------------- | ------ | ------ |
+| --------- | -------------------------------------------- | ---------- | ----- | ------ | -------| 
 | rnd()     | 0.07 s                     | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>24</sup> ?| native Excel VBA function |
 | fminx32   | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
 | mix32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
