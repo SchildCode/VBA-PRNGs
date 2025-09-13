@@ -6,9 +6,9 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 | PRNG name | Time to generate 1&nbsp;million&nbsp;numbers | SmallCrush | Crush | Period | Source |
 | --------- | -------------------------------------------- | ---------- | ----- | ------ | -------| 
 | rnd()     | 0.07 s                     | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>24</sup> ?| native Excel VBA function |
+| Bryc32    | 0.08 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>127</sup> | "Bryc" variant of SFC32 |
 | fminx32   | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
 | mix32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
-| Bryc32    | 0.08 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>127</sup> | "Bryc" variant of SFC32 |
 | SFC32     | 0.09 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>127</sup> | Small Fast Counting (SFC) by Chris Doty-Humphrey |
 | LFIB4     | 0.22 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>287</sup> | 4-lagged Fibonacci generator (Marsaglia) |
 | RANDBETWEEN() | 0.23 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ? | Faster array-version of Excel worksheet function RAND() | 
