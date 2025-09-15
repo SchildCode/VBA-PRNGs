@@ -12,7 +12,6 @@
 ' LIFB4 - 4-lagged Fibonacci generator
 ' MTran - Mersenne Twister
 ' SFC32 - Canonical 32-bit version of Small Fast Counting (SFC) Pseudo-Random Number Generator. The code is in module SFC32_module
-' Byrc32 - Bryc variant of SFC32. The code is in module SFC32_module
 ' PCG32 - Permuted Congruential Generator (PCG) pseudo-random number generator. The code is in module PCG32_module
 '===============================================================
 
