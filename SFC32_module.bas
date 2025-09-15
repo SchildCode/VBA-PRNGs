@@ -36,6 +36,8 @@ End Sub
 
 Function SFC32#(Optional Nmax^ = 1^)
     'Generates next SFC32 pseudorandom number. Remember to first inititialize & seed with SFC32_init(seed)
+    'Arguments: Nmax=1 for decimal output [0,1), and integer 1<Nmax for integer output [1,Nmax] avoiding modulo bias
+    'Note: First inititlize & seed with routine SFC32_init() to set globals a,b,c,d, before using this function
     Dim t^, cL^, cR^
 reject:
     t = (a + b + d) And MASK32                   't = (a + b + d) | 0
@@ -68,6 +70,40 @@ Private Function mix32^(ByRef s^)
     s = (s * &H735A2D97) And MASK32 'Multiply &H735A2D97
     s = s Xor (s \ BIT15) 'XOR shift
     mix32 = s
+End Function
+
+'====================================== Alt.2: encapsulated single-subroutine for SFC32 with integrated initialization
+
+Function xSFC32#(Optional Nmax^ = 1^)
+    'Self-contained extra-Small Fast Counter (xSFC) random number generator, with self-contained initialization and hard-coded seed
+    'Passes DieHard and TestU01 BigCrush tests
+    'Arguments: Nmax=1 for decimal output [0,1), and integer 1<Nmax for integer output [1,Nmax] avoiding modulo bias
+    Const BIT3^ = 2 ^ 3
+    Const BIT9^ = 2 ^ 9
+    Const BIT11^ = 2 ^ 11
+    Const BIT21^ = 2 ^ 21
+    Const MASK32^ = 2 ^ 32 - 1
+    Const DIV32# = 2.3283064365387E-10 '=1/(2^32)
+    Dim tt^, cL^, cR^
+    Static aa^, bb^, cc^, dd^, init^
+    If Not init Then init = True: aa = 2754059347^: bb = 288685983^: cc = 479643687^: dd = 2575288963^ 'This combination from SplitMix32 gives relatively uniform distribution for the first 10000 numbers
+'---
+reject:
+    tt = (aa + bb + dd) And MASK32                  't = (a + b + d) | 0
+    dd = (dd + 1) And MASK32                        'd = d + 1 | 0;
+    aa = bb Xor (bb \ BIT9)                         'a = b ^ b >>> 9
+    bb = (cc + ((cc * BIT3) And MASK32)) And MASK32 'b = c + (c << 3) | 0
+    cL = (cc * BIT21) And MASK32                    'cL = c << 21
+    cR = cc \ BIT11                                 'cR >>> 11
+    cc = ((cL Or cR) + tt) And MASK32               'c = (cL|cR) + t | 0
+    tt = tt And MASK32                              '(t >>> 0) // 4294967296
+    'Return a Double-precision type containing either a decimal or whole number, depending on the value of argument Nmax
+    If Nmax <= 1^ Then 'return decimal in range [0,1)
+        xSFC32 = tt * DIV32 'Output unsigned double (32-bit) in the range [0,1); it can potentially equal 0, but is always less than 1.
+    Else 'return integer in range [1,Nmax] avoiding modulo bias by rejection-sampling. Nmax must be an integer in the range [2, 2*32]
+        xSFC32 = 1# + tt \ (MASK32 \ Nmax) 'Note: It is possible to precumpute the static denominator (MASK32 \ Nmax), but the speedup is only 3%
+        If Nmax < xSFC32 Then GoTo reject
+    End If
 End Function
 
 '====================================== The code below is just for testing, and can be deleted ======================================
@@ -103,11 +139,11 @@ Function SFC32_U32^()
 End Function
 
 Function xSFC32_U32^()
-    'extra-Small Fast Counter (xSFC) random number generator, with self-contained initialization
+    'extra-Small Fast Counter (xSFC) random number generator, with self-contained initialization (same as function xSFC32)
     'Function: Returns an unsigned 32-bit integer in a LongLong, useful for testing on TestU01 or ENT. This is because the 32-bit Long-type is signed
     Dim tt^, cL^, cR^
     Static aa^, bb^, cc^, dd^, init^
-    If Not init Then init = True: aa = 787832781^: bb = 3154205574^: cc = 2479990220^: dd = 4203474034^ 'This combination gives relatively uniform bin distribution for the first 1000 bins
+    If Not init Then init = True: aa = 2754059347^: bb = 288685983^: cc = 479643687^: dd = 2575288963^ 'This combination from SplitMix32 gives relatively uniform distribution for the first 10000 numbers
 '---
     tt = (aa + bb + dd) And MASK32                  't = (a + b + d) | 0
     dd = (dd + 1) And MASK32                        'd = d + 1 | 0;
@@ -119,28 +155,3 @@ Function xSFC32_U32^()
     xSFC32_U32 = tt And MASK32                      '(t >>> 0) // 4294967296
 End Function
 
-Function xSFC32#(Optional Nmax^ = 1^)
-    'Self-contained extra-Small Fast Counter (xSFC) random number generator, with self-contained initialization and hard-coded seed
-    'Function: Returns an unsigned 32-bit integer in a LongLong, useful for testing on TestU01 or ENT. This is because the 32-bit Long-type is signed
-    Dim tt^, cL^, cR^
-    Static aa^, bb^, cc^, dd^, init^
-    If Not init Then init = True: aa = 787832781^: bb = 3154205574^: cc = 2479990220^: dd = 4203474034^ 'This combination gives relatively uniform bin distribution for the first 1000 bins
-'---
-reject:
-    tt = (aa + bb + dd) And MASK32                  't = (a + b + d) | 0
-    dd = (dd + 1) And MASK32                        'd = d + 1 | 0;
-    aa = bb Xor (bb \ BIT9)                         'a = b ^ b >>> 9
-    bb = (cc + ((cc * BIT3) And MASK32)) And MASK32 'b = c + (c << 3) | 0
-    cL = (cc * BIT21) And MASK32                    'cL = c << 21
-    cR = cc \ BIT11                                 'cR >>> 11
-    cc = ((cL Or cR) + tt) And MASK32               'c = (cL|cR) + t | 0
-    tt = tt And MASK32                      '(t >>> 0) // 4294967296
-    'Return a Double-precision type containing either a decimal or whole number, depending on the value of argument Nmax
-    If Nmax <= 1^ Then 'return decimal in range [0,1)
-        xSFC32 = tt * DIV32 'Output unsigned double (32-bit) in the range [0,1); it can potentially equal 0, but is always less than 1.
-    Else 'return integer in range [1,Nmax] avoiding modulo bias by rejection-sampling. Nmax must be an integer in the range [2, 2*32]
-        'Note: I also tried Algorithm 5 by Daniel Lemire (https://arxiv.org/abs/1805.10941), but it was actually NOT systematically faster then this one (\ is replaced by AND, which is just as slow on VBA).
-        xSFC32 = 1# + tt \ (MASK32 \ Nmax) 'Note: It is possible to precumpute the static denominator (MASK32 \ Nmax), but the speedup is only 3%
-        If Nmax < xSFC32 Then GoTo reject
-    End If
-End Function
