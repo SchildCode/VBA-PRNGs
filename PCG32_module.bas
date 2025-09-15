@@ -65,7 +65,9 @@ Public Sub PCG32_init(Optional seed^ = 1^)
 End Sub
 
 Public Function PCG32#(Optional Nmax^ = 1^)
-    'Generates next PCG32 pseudorandom number
+    'Generates next PCG32 (XSH-RR) pseudorandom number
+    'Arguments: Nmax=1 for decimal output [0,1), and integer 1<Nmax for integer output [1,Nmax] avoiding modulo bias
+    'Note: First inititlize & seed with routine PCG32_init() to set globals s_hi, s_lo, i_hi, i_lo, and SH(), before using this function
     Dim old_hi^, old_lo^, rHi^, rLo^, xhi^, xlo^, x^, u^
     Dim rot&
 '---
@@ -93,7 +95,8 @@ End Function
 Private Function mix32^(ByRef s^)
     'Helper function for PCG32.
     'SplitMix32 algorithm with Marasglai's Weyl increment followed by a xmxmx-mixer with Hash-Prospector 'optimized' constants discovered by TheIronBorn in 2022 (https://github.com/skeeto/hash-prospector/issues/19#issuecomment-1120105785)
-    'Returns incremented state s^ [0, 2^32) and random integer hp_mix32^ [0, 2^32), both LongLong-type variables
+    'This 'optimized' version is also recommended by Bryc: https://github.com/bryc/code/blob/master/jshash/PRNGs.md
+    'Returns incremented state s^ [0, 2^32) and random integer mix32^ [0, 2^32), both LongLong-type variables
     s = (s + PHI32) And MASK32 'Weyl increment, typically 0x9E3779B9 from Marsaglia
     s = s Xor (s \ BIT16) 'XOR shift
     s = (s * &H21F0AAAD) And MASK32 'Multiply &H21F0AAAD
