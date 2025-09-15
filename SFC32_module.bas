@@ -119,7 +119,7 @@ Function xSFC32_U32^()
     xSFC32_U32 = tt And MASK32                      '(t >>> 0) // 4294967296
 End Function
 
-Function xSFC32^(Optional Nmax^ = 1^)
+Function xSFC32#(Optional Nmax^ = 1^)
     'Self-contained extra-Small Fast Counter (xSFC) random number generator, with self-contained initialization and hard-coded seed
     'Function: Returns an unsigned 32-bit integer in a LongLong, useful for testing on TestU01 or ENT. This is because the 32-bit Long-type is signed
     Dim tt^, cL^, cR^
