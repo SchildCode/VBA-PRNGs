@@ -3,17 +3,17 @@ Pseudoranom number generators ported to VBA, and code for validating with TestU0
 I have used pseudorandom and quasirandom number generators for over 30 years, for Monte Carlo simulations, optimization, and numerical quadrature.
 I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs I should use in VBA, and the results are summarized in the table below in order of speed:
 
-| PRNG name | Time to generate 1&nbsp;million&nbsp;numbers | SmallCrush | Crush | Period | Source |
-| --------- | -------------------------------------------- | ---------- | ----- | ------ | -------| 
-| rnd()     | 0.068 s                     | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>24</sup> ?| native Excel VBA function |
-| SFC32     | 0.088 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>127</sup> | Small Fast Counting (SFC) by Chris Doty-Humphrey |
-| fminx32   | 0.091 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
-| mix32     | 0.094 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
-| RANDBETWEEN() | 0.209 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ? | Faster array-version of Excel worksheet function RAND() | 
-| LFIB4     | 0.212 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>287</sup> | 4-lagged Fibonacci generator (Marsaglia) |
-| PCG32     | 0.455 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | 2<sup>64</sup> | PCG32 (XSH-RR),  Permuted Congruential Generator | 
-| MTran     | 0.813 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | 2<sup>19937</sup>-1 | Mersenne Twister, a.k.a. MT19937 |
-| RAND()    | 41.40 s                    | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ? | =Evaluate("=RAND()") in VBA |
+| PRNG name | Time to generate 1&nbsp;million&nbsp;numbers | SmallCrush | Crush | BigCrush | Period | Source |
+| --------- | -------------------------------------------- | ---------- | ----- | -------- | ------ | -------| 
+| rnd()     | 0.068 s                     | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>24</sup> ?| native Excel VBA function |
+| SFC32     | 0.088 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ~2<sup>127</sup> | Small Fast Counting (SFC) by Chris Doty-Humphrey |
+| fminx32   | 0.091 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | Canonical SplitMix32 with Murmur3 fmix32 xmxmx-mixer/finisher |
+| mix32     | 0.094 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>32</sup> | SplitMix32 with xmxmx-mixer optimized by Hash-Prospector |
+| RANDBETWEEN() | 0.209 s                 | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ? | ? | Faster array-version of Excel worksheet function RAND() | 
+| LFIB4     | 0.212 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | ~2<sup>287</sup> | 4-lagged Fibonacci generator (Marsaglia) |
+| PCG32     | 0.455 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | 2<sup>64</sup> | PCG32 (XSH-RR),  Permuted Congruential Generator | 
+| MTran     | 0.813 s                     | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ![Failed](https://img.shields.io/badge/Fail-red) | 2<sup>19937</sup>-1 | Mersenne Twister, a.k.a. MT19937 |
+| RAND()    | 41.40 s                    | ![Passed](https://img.shields.io/badge/Pass-green) | ![Passed](https://img.shields.io/badge/Pass-green) | ? | ? | =Evaluate("=RAND()") in VBA |
 
 ## Conclusion
 
