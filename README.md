@@ -17,7 +17,7 @@ I have translated a number of PRNGs to VBA. Recently I re-evaluated which PRNGs 
 
 ## Conclusion
 
-* Use **SFC32** for most PRNG tasks (all except studies to be published with peer-review). It is very fast, has a long period (~2^128), and passes all tests in BugCrush. I have also coded an 'extra-small' version, **xSFC32**, with self-contained initialization and hard-coded seeding. The source code for both is in file [SFC32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/SFC32_module.bas).
+* Use **SFC32** for most PRNG tasks (all except studies to be published with peer-review). It is very fast, has a long period (~2^128), and passes all tests in BugCrush. I have also coded an 'extra-small' version, **xSFC32**, with self-contained initialization without seeding, that doesn't need warmup. The source code for both is in file [SFC32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/SFC32_module.bas).
 * Use **PCG32** for those PRNG tasks requiring best statistical quality, for publishing. It is slower than SFC32 but has a solid mathematical design rationale (LCG base + permutation step) and extensive empirical evidence of consistently excellent quality (TestU01, PractRand) and reproducibility. The source code is in file [PCG32_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/PCG32_module.bas).
 
 Code of the remaining PRNGs is in file [otherPRNGs_module.bas](https://github.com/SchildCode/VBA-PRNGs/blob/main/otherPRNGs_module.bas).<br>
