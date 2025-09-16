@@ -45,12 +45,14 @@ Const kMT_1# = 1# / k2_32b
 
 
 Function rnd_U32^()
-    'Excel native rnd() function
+    'Excel native rnd() function.
+    'The Rnd() function has been described by Microsoft as being a basic Linear Congruential Generator (LCG), but Microsoft has not disclosed exactly which LCG. Its period is 2^24
     rnd_U32 = CLngLng(Int(Rnd() * CDbl(BIT32))) 'Generate random double U[0,1) and scale to D32, then store in a LongLong
 End Function
 
 Function RAND_U32^()
-    'Returns Excel RAND worksheet function. Extraordinarily slow!
+    'Returns Excel RAND worksheet function. Extraordinarily slow, because RAND() is not available in the VBA object library, unlike RANDARRAY(), so one has to access it inside an Evaluate() call.
+    'Purportedly uses the Mersenne Twister PRNG, but this is not confirmed my Microsoft. It is statistically superior to VBA function rnd()
     Dim R As Variant
 '---
     R = Evaluate("=RAND()")
@@ -58,8 +60,8 @@ Function RAND_U32^()
 End Function
 
 Function RANDARRAY_U32^()
-    'Returns Excel RANDARRAY worksheet function.
-    'speeds up by using static array, filling once every CHUNK values.
+    'Employs the Excel RANDARRAY worksheet function. It uses the same PRNG (purportedly Mersenne Twister) as worksheet function RAND(), but is faster because it fills a whole array.
+    'Speeds up by using static array, filling once every CHUNK values.
     Const N& = 1000& 'Generate a chunk of random numbers at a time, much faster than Evaluate("=RAND()")
     Static i&
     Static R() As Variant 'store array of CHUNK random numbers. Reduces the number of slow COM calls to WorksheetFunction.RandArray
